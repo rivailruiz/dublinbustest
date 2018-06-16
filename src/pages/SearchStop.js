@@ -32,8 +32,9 @@ export default class SearchTop extends React.Component<*, *> {
     const { results, errormessage } = realTimeBusInformation;
     this.setState({ results, errorMessage: errormessage });
   };
-
+  
   render() {
+
     const { state, submit, handleInputChange } = this;
     const { stopId, results, errorMessage } = state;
 
@@ -41,12 +42,16 @@ export default class SearchTop extends React.Component<*, *> {
       <Wrapper>
         <Separator />
         <Input name="stopId" value={stopId} onChange={handleInputChange} />
-        <p>stopId: {stopId}</p>
         <Separator />
         <Button onClick={() => submit(stopId)}>CLICK HERE!</Button>
         <Separator />
         {errorMessage && <p>Error:{errorMessage}</p>}
-        {results.map(result => <p>{JSON.stringify(result, null, 4)}</p>)}
+        <h1>Proximos Ônibus</h1>
+        {results.map(result => <div>
+            <p>Rota:{result.route}</p>
+            <p>em {result.duetime} minutos</p>
+            <p>para {result.destination} </p>
+          </div>)}
       </Wrapper>
     );
   }
