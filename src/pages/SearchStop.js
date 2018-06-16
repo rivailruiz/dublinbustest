@@ -1,52 +1,15 @@
 import * as React from "react";
-import dc from "diet-cola";
 
-const Wrapper = dc("div")(`
-    display: flex;
-    flex-direction: column;
-    justify-content: center;
-    align-items: center;
-`);
-
-const Separator = dc("div")(`
-    margin: 40px 0px 40px 0px;
-`);
-
-const Button = dc("button")(`
-  font-family: inherit;
-  font-size: inherit;
-  padding: 8px;
-  margin: 0;
-  color: white;
-  background-color: tomato;
-  border: 0;
-  border-radius: 4px;
-  appearance: none;
-  &:hover {
-    background-color: black;
-  }
-`);
-
-const Input = dc("input")(`
-    font-family: inherit;
-    font-size: inherit;
-    padding: 8px;
-    margin: 0;
-    color: white;
-    background-color: tomato;
-    border: 0;
-    border-radius: 4px;
-    appearance: none;
-    &:hover {
-    background-color: black;
-    }
-`);
+import Button from '../components/atomics/Button';
+import Input from '../components/atomics/Input';
+import Separator from '../components/atomics/Separator';
+import Wrapper from '../components/atomics/Wrapper';
 
 export default class SearchTop extends React.Component<*, *> {
   state = {
-    stopId: "",
+    errorMessage: "",
     results: [],
-    errorMessage: ""
+    stopId: ""
   };
 
   handleInputChange = event => {
@@ -63,6 +26,9 @@ export default class SearchTop extends React.Component<*, *> {
       `https://data.smartdublin.ie/cgi-bin/rtpi/realtimebusinformation?stopid=${stopId}&format=json`
     );
     const realTimeBusInformation = await response.json();
+
+    console.log(`realTimeBusInformation`, realTimeBusInformation);
+
     const { results, errormessage } = realTimeBusInformation;
     this.setState({ results, errorMessage: errormessage });
   };
@@ -80,7 +46,7 @@ export default class SearchTop extends React.Component<*, *> {
         <Button onClick={() => submit(stopId)}>CLICK HERE!</Button>
         <Separator />
         {errorMessage && <p>Error:{errorMessage}</p>}
-        {results.map(result => <p>{result}</p>)}
+        {results.map(result => <p>{JSON.stringify(result, null, 4)}</p>)}
       </Wrapper>
     );
   }
