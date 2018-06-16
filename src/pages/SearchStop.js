@@ -40,18 +40,21 @@ export default class SearchTop extends React.Component<*, *> {
 
     return (
       <Wrapper>
+        <h2>Dublin Bus - beta version</h2>
+        <img src="http://babylonradio.com/wp-content/uploads/2015/05/harp.png" />
         <Separator />
-        <Input name="stopId" value={stopId} onChange={handleInputChange} />
+        <Input name="stopId" value={stopId} onChange={handleInputChange} placeholder="Enter the stop id" />
         <Separator />
-        <Button onClick={() => submit(stopId)}>CLICK HERE!</Button>
+        <Button onClick={() => submit(stopId)}>Search</Button>
         <Separator />
         {errorMessage && <p>Error:{errorMessage}</p>}
-        <h1>Proximos Ônibus</h1>
-        {results.map(result => <div>
-            <p>Rota:{result.route}</p>
-            <p>em {result.duetime} minutos</p>
-            <p>para {result.destination} </p>
-          </div>)}
+        {results.map(result => 
+          <div className="card">
+              <div>Rota:{result.route}</div>
+              <div>em {result.duetime} minutos</div>
+              <div>para {result.destination} </div>
+          </div>
+        )}
       </Wrapper>
     );
   }
