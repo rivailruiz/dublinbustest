@@ -26,6 +26,9 @@ export default class SearchTop extends React.Component<*, *> {
       `https://data.smartdublin.ie/cgi-bin/rtpi/realtimebusinformation?stopid=${stopId}&format=json`
     );
     const realTimeBusInformation = await response.json();
+
+    console.log(`realTimeBusInformation`, realTimeBusInformation);
+
     const { results, errormessage } = realTimeBusInformation;
     this.setState({ results, errorMessage: errormessage });
   };
@@ -43,7 +46,7 @@ export default class SearchTop extends React.Component<*, *> {
         <Button onClick={() => submit(stopId)}>CLICK HERE!</Button>
         <Separator />
         {errorMessage && <p>Error:{errorMessage}</p>}
-        {results.map(result => <p>{result}</p>)}
+        {results.map(result => <p>{JSON.stringify(result, null, 4)}</p>)}
       </Wrapper>
     );
   }
